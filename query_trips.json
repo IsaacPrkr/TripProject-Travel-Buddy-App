@@ -1,0 +1,121 @@
+[
+    {
+        "id": "NYC",
+        "location": "New York",
+        "Trip1": "Visit Empire State Building",
+        "Trip2": "Visit Statue of Liberty",
+        "Trip3": "Visit Time Square"
+    },
+    {
+        "id": "PAR",
+        "location": "Paris",
+        "Trip1": "Visit the Eiffel Tower",
+        "Trip2": "Visit Louvre Museum",
+        "Trip3": "Visit Arc de Triophe"
+    },
+    {
+		"id": "LON",
+		"location": "London",
+		"Trip1": "Visit Big Ben",
+		"Trip2": "Visit London Bridge",
+		"Trip3": "Visit the House of Parliament"
+    },
+    {
+		"id": "SYD",
+		"location": "Sydney",
+		"Trip1": "Visit Sydney Opera House",
+		"Trip2": "Visit Darling Harbour",
+		"Trip3": "Visit Sydney Harbour Bridge"
+    },
+    {
+		"id": "BAR",
+		"location": "Barcelona",
+		"Trip1": "Visit La Sagrada Familia",
+		"Trip2": "Visit Park Guell",
+		"Trip3": "Visit Casa Batlló"
+    },
+    {
+		"id": "AMS",
+		"location": "Amsterdam",
+		"Trip1": "Visit Rijksmuseum",
+		"Trip2": "Visit Van Gogh Museum",
+		"Trip3": "Visit NEMO Science Museum"
+    },
+    {
+		"id": "ROM",
+		"location": "Rome",
+		"Trip1": "Visit Colosseum",
+		"Trip2": "Visit Trevi Fountain",
+		"Trip3": "Visit the Pantheon"
+    },
+    {
+		"id": "LA",
+		"location": "Los Angeles",
+		"Trip1": "Visit The Getty",
+		"Trip2": "Visit Los Angeles County Museum of Art",
+		"Trip3": "Visit Griffith Observatory"
+    },
+    {
+		"id": "VIE",
+		"location": "Vienna",
+		"Trip1": "Visit St. Stephen's Cathedral",
+		"Trip2": "Visit Hofburg",
+		"Trip3": "Visit Belvedere Palace"
+    },
+    {
+		"id": "MAD",
+		"location": "Madrid",
+		"Trip1": "Visit Museo Nacional del Prado",
+		"Trip2": "Visit Royal Palace of Madrid",
+		"Trip3": "Visit Plaza Mayor"
+    },
+    {
+		"id": "VEN",
+		"location": "Venice",
+		"Trip1": "Visit St. Mark's Square",
+		"Trip2": "Visit Doge's Palace",
+		"Trip3": "Visit Rialto Bridge"
+    },
+    {
+		"id": "DUB",
+		"location": "Dublin",
+		"Trip1": "Visit Guinness Storehouse",
+		"Trip2": "Visit Trinity College Dublin",
+		"Trip3": "EPIC The Irish Emigration Museum"
+    },
+    {
+		"id": "BER",
+		"location": "Berlin",
+		"Trip1": "Visit Brandenburg Gate",
+		"Trip2": "Visit Reichstag Building",
+		"Trip3": "Visit Charlottenburg Palace"
+    },
+    {
+		"id": "CHI",
+		"location": "Chicago",
+		"Trip1": "Visit The Art Institute of Chicago",
+		"Trip2": "Visit Millennium Park",
+		"Trip3": "Visit Field Museum"
+    },
+    {
+		"id": "SEO",
+		"location": "Seoul",
+		"Trip1": "Visit Gyeongbokgung Palace",
+		"Trip2": "Visit N Seoul Tower",
+		"Trip3": "Visit National Museum of Korea"
+    },
+    {
+		"id": "DUA",
+		"location": "Dubai",
+		"Trip1": "Visit Burj Al Arab",
+		"Trip2": "Visit Dubai Mall",
+		"Trip3": "Visit Burj Khalifa"
+    },
+    {
+		"id": "PRA",
+		"location": "Prague",
+		"Trip1": "Visit Prague Castle",
+		"Trip2": "Visit Charles Bridge",
+		"Trip3": "Visit Old Town Square"
+    }
+]

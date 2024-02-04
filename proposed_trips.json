@@ -1,0 +1,132 @@
+[
+    {
+        "tripID": "Trip701716",
+        "userID": "User943070",
+        "location": "Paris",
+        "start_date": "2023-11-26",
+        "end_date": "2023-11-30",
+        "temperature_start": "7",
+        "weather_start": "Clear",
+        "details": "Going to see eiffel tower"
+    },
+    {
+        "tripID": "Trip476938",
+        "userID": "User943070",
+        "location": "London",
+        "start_date": "2023-11-30",
+        "end_date": "2023-12-4",
+        "temperature_start": "3",
+        "weather_start": "Cloudy",
+        "details": "Going to see london"
+    },
+    {
+        "tripID": "Trip865982",
+        "userID": "User943070",
+        "location": "London",
+        "start_date": "2023-11-30",
+        "end_date": "2023-12-5",
+        "temperature_start": "3",
+        "weather_start": "Cloudy",
+        "details": "Going to see london for first time"
+    },
+    {
+        "tripID": "Trip181313",
+        "userID": "User419479",
+        "location": "Berlin",
+        "start_date": "2023-12-04",
+        "end_date": "2023-12-12",
+        "temperature_start": "-1",
+        "weather_start": "Mist",
+        "details": "Visiting Berlin for the first time."
+    },
+    {
+        "tripID": "Trip244587",
+        "userID": "User943070",
+        "location": "Paris",
+        "start_date": "2023-12-03",
+        "end_date": "2023-12-06",
+        "temperature_start": "3",
+        "weather_start": "Clear",
+        "details": "Going to paris"
+    },
+    {
+        "tripID": "Trip976557",
+        "userID": "User943070",
+        "location": "Paris",
+        "start_date": "2023-12-04",
+        "end_date": "2023-12-08",
+        "temperature_start": "8",
+        "weather_start": "Overcast",
+        "details": "seeing paris"
+    },
+    {
+        "tripID": "Trip624378",
+        "userID": "User578804",
+        "location": "New York",
+        "start_date": "2023-12-04",
+        "end_date": "2023-12-07",
+        "temperature_start": "10",
+        "weather_start": "Fog",
+        "details": "Going to new york for visiting friends!"
+    },
+    {
+        "tripID": "Trip137850",
+        "userID": "User861788",
+        "location": "Manchester",
+        "start_date": "2023-12-04",
+        "end_date": "2023-12-12",
+        "temperature_start": "3",
+        "weather_start": "Patchy rain possible",
+        "details": "Going to see manchester for the first time!"
+    },
+    {
+        "tripID": "Trip687763",
+        "userID": "User480116",
+        "location": "Chicago",
+        "start_date": "2023-12-04",
+        "end_date": "2023-12-08",
+        "temperature_start": "5",
+        "weather_start": "Overcast",
+        "details": "Going to see chicago with friends"
+    },
+    {
+        "tripID": "Trip577379",
+        "userID": "User695770",
+        "location": "Dublin",
+        "start_date": "2023-12-04",
+        "end_date": "2023-12-13",
+        "temperature_start": "4",
+        "weather_start": "Light rain shower",
+        "details": "Going to ireland to visit family"
+    },
+    {
+        "tripID": "Trip342713",
+        "userID": "User480116",
+        "location": "London",
+        "start_date": "2024-01-15",
+        "end_date": "2024-01-18",
+        "temperature_start": "2",
+        "weather_start": "Clear",
+        "details": "Going to see big ben for the first time!"
+    },
+    {
+        "tripID": "Trip795727",
+        "userID": "User480116",
+        "location": "Barcelona",
+        "start_date": "2024-01-15",
+        "end_date": "2024-01-19",
+        "temperature_start": "16",
+        "weather_start": "Partly cloudy",
+        "details": "Visiting Barcelona to see friends."
+    },
+    {
+        "tripID": "Trip759256",
+        "userID": "User480116",
+        "location": "New York",
+        "start_date": "2024-01-16",
+        "end_date": "2024-01-20",
+        "temperature_start": "1",
+        "weather_start": "Heavy snow",
+        "details": "Going to see the empire state building"
+    }
+]
