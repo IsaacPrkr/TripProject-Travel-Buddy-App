@@ -225,6 +225,8 @@ def generate_unique_trip_id_internal():
         return 'Error could not generate.'  #   Error handling
 
 
+# :)
+
 
 if __name__ == '__main__':
     app.run(debug=True) # Flask server starting
