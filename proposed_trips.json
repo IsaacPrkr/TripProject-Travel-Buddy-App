@@ -128,5 +128,15 @@
         "temperature_start": "1",
         "weather_start": "Heavy snow",
         "details": "Going to see the empire state building"
+    },
+    {
+        "tripID": "Trip145127",
+        "userID": "User695770",
+        "location": "Frankfurt",
+        "start_date": "2025",
+        "end_date": "2025",
+        "temperature_start": "Error fetching temperature",
+        "weather_start": "Error fetching weather",
+        "details": "123"
     }
 ]
