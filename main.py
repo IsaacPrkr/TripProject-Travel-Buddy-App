@@ -1,45 +1,67 @@
-import requests
-from flask import Flask, request, jsonify# importing needed modules
+# import requests
+# from flask import Flask, request, jsonify# importing needed modules
+from fastapi import FastAPI
+from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+import uvicorn
 import json
+import os
+import random
+import string
+import requests
 
-BASE_URL = "https://localhost:5000" # Flask server base URL
-WORLD_WEATHER_API_URL = "https://api.worldweatheronline.com/premium/v1/weather.ashx"
-WORLD_WEATHER_API_KEY = "8e3584cbdc8346079c5230106230911" # importing API key for external service
+# BASE_URL = "https://localhost:5000" # Flask server base URL
+# WORLD_WEATHER_API_URL = "https://api.worldweatheronline.com/premium/v1/weather.ashx"
+# WORLD_WEATHER_API_KEY = "8e3584cbdc8346079c5230106230911" # importing API key for external service
+app = FastAPI()
 
-app = Flask(__name__)
 
-#   Creating the Create User REST method to allow users to create accounts with password protection - each account is stored in the users.json file...
-@app.route('/create_user', methods=['POST']) # Will be triggered when a HTTP post request is sent to this endpoint
-def create_user():
-    data = request.json # Retrieve JSON data
-    name = data.get('name')
-    password = data.get('password')
+# User model for request validation
+class User(BaseModel):
+    name: str
+    password: str  # Storing passwords in plain text (not recommended for production)
 
-    user_id = generate_unique_user_id_internal() # Generate the account an unique User ID with the function built into the orchestrator service using the random API
+# Function to generate a unique user ID
+def generate_unique_user_id_internal():
+    return "User" + ''.join(random.choices(string.digits, k=6))  # Generates User123456
 
+# Ensure the JSON file exists and is properly initialized
+def ensure_users_file():
+    if not os.path.exists("users.json"):
+        with open("users.json", "w") as f:
+            json.dump([], f)
+
+# Create User Endpoint
+@app.post('/create_user')
+def create_user(user: User):
+    ensure_users_file()  # Ensure users.json exists
+
+    user_id = generate_unique_user_id_internal()
 
     new_user = {
         "userID": user_id,
-        "name": name,   #   Creates a dictionary with user id, name, password
-        "password": password
+        "name": user.name,
+        "password": user.password  
     }
 
-    with open('users.json', 'r+') as file:  #   Open file in read and write mode
+    # Read and update the JSON file
+    with open('users.json', 'r+') as file:
         try:
-            user_data = json.load(file) #   Load JSON user data
+            user_data = json.load(file)  # Load existing user data
         except json.JSONDecodeError:
-            user_data = [] # create user data list
+            user_data = []  # If file is empty or corrupted, start fresh
 
-        user_data.append(new_user) # adds user to user data list
+        user_data.append(new_user)  # Add the new user
         file.seek(0)
-        json.dump(user_data, file, indent=4) # writes the user data in JSON format to the users.json file
+        json.dump(user_data, file, indent=4)  # Write updated data
 
-    return jsonify(user=new_user) # responds the details of the account created
+    return {"user": {"userID": user_id, "name": user.name, "password": user.password}}
+
 
 #   Creating REST Method for logging in the user
-@app.route('/login', methods=['POST'])  #   Define route for handling POST requests for the login endpoint
+@app.route('/login', methods=['POST'])  
 def login_user():
-    data = request.get_json()   #   Retrieve the JSON data from the POST request
+    data = request.get_json()   
 
     if 'name' in data and 'password' in data:
         name = data['name']     #   Check if name and password exits in the data, extract the name and password
@@ -206,14 +228,6 @@ def check_interest_on_proposed_trips():
     return jsonify(user_ids=user_ids)   #   Return JSON response with the user IDs that are interested in that specific trip
 
 
-#   Creating function for generating unique user ID
-def generate_unique_user_id_internal():
-    response = requests.get('https://www.random.org/integers/?num=1&min=100000&max=999999&col=1&base=10&format=plain&rnd=new')  #   Api link for random.org
-    if response.status_code == 200:     #   Check if response is successful
-        userID = response.text.strip()
-        return 'User' + userID  # return user with generated unique ID
-    else:
-        return 'Error could not generate.'  # Errror handling
 
 #   Creating function for generating unique trip ID
 def generate_unique_trip_id_internal():
@@ -225,9 +239,15 @@ def generate_unique_trip_id_internal():
         return 'Error could not generate.'  #   Error handling
 
 
-# :)
-# heheeeheh ahhaaah a
-
-
 if __name__ == '__main__':
-    app.run(debug=True) # Flask server starting
+    uvicorn.run(app, host="0.0.0.0", port=5000)
+
+
+#List of things to implement
+#switch to fastapi
+
+#hash passwords
+
+#save data to mysql
+
+#retrieve data from mysql
