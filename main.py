@@ -1,5 +1,3 @@
-# import requests
-# from flask import Flask, request, jsonify# importing needed modules
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
@@ -8,7 +6,7 @@ import json
 import os
 import random
 import string
-import requests
+# import requests
 
 # BASE_URL = "https://localhost:5000" # Flask server base URL
 # WORLD_WEATHER_API_URL = "https://api.worldweatheronline.com/premium/v1/weather.ashx"
@@ -60,6 +58,7 @@ def create_user(user: User):
         json.dump(user_data, file, indent=4)  # Write updated data
 
     return {"user": {"userID": user_id, "name": user.name, "password": user.password}}
+
 
 
 #   Creating REST Method for logging in the user
