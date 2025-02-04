@@ -1,27 +1,42 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 import uvicorn
 import json
 import os
 import random
 import string
+
+from database import SessionLocal, engine
+from models import Base, UserDB
+from pydantic import BaseModel
+
 # import requests
 
 # BASE_URL = "https://localhost:5000" # Flask server base URL
 # WORLD_WEATHER_API_URL = "https://api.worldweatheronline.com/premium/v1/weather.ashx"
 # WORLD_WEATHER_API_KEY = "8e3584cbdc8346079c5230106230911" # importing API key for external service
+
+#Create the database tables
+Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
 
 
 # User model for request validation
-class User(BaseModel):
+class UserCreate(BaseModel):
     name: str
     password: str  # Storing passwords in plain text (not recommended for production)
 
 class UserLogin(BaseModel):
     name: str
     password: str
+
+def getDB():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # Function to generate a unique user ID
 def generate_unique_user_id_internal():
@@ -35,48 +50,36 @@ def ensure_users_file():
 
 # Create User Endpoint
 @app.post('/create_user')
-def create_user(user: User):
-    ensure_users_file()  # Ensure users.json exists
+def create_user(user: UserCreate):
+    # ensure_users_file()  # Ensure users.json exists
+    existing_user = db.query(UserDB).filter(UserDB.name == user.name).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username already exists...")
 
     user_id = generate_unique_user_id_internal()
+    new_user = UserDB(userID=user_id, name=user.name, password=user.password)
 
-    new_user = {
-        "userID": user_id,
-        "name": user.name,
-        "password": user.password  
-    }
 
-    # Read and update the JSON file
-    with open('users.json', 'r+') as file:
-        try:
-            user_data = json.load(file)  # Load existing user data
-        except json.JSONDecodeError:
-            user_data = []  # If file is empty or corrupted, start fresh
-
-        user_data.append(new_user)  # Add the new user
-        file.seek(0)
-        json.dump(user_data, file, indent=4)  # Write updated data
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
 
     return {"user": {"userID": user_id, "name": user.name, "password": user.password}}
 
 
-#   Creating REST Method for logging in the user
+# Creating REST Method for logging in the user
 @app.post('/login')  
 def login_user(user: UserLogin):
-    ensure_users_file()
+   # ensure_users_file()
 
+    existing_user = db.query(UserDB).filter(UserDB.name == user.name, UserDB.password == user.password).first()
 
-    with open('users.json', 'r') as file:   #   Open users.json file in read
-        try:
-            users = json.load(file)
-        except json.JSONDecodeError:
-            users = []
+    if not existing_user: # check if credentials are incorrect
+        raise HTTPException(status_code=401, detail="Incorrect username or password...")
+    
+    return {"message": "Login Successful!", "user": {"userID": existing_user.userID, "name": existing_user.name}}
         
-    for existing_user in users:
-        if existing_user['name'] == user.name and existing_user['password'] == user.password: #   Check for matching name and password
-            return {"message": "Login Successful!", "user": existing_user}
-        
-    raise HTTPException(status_code=401, detail="Incorrect login information, Please try again.")
+    
 
 
 #Creating querying for new trips REST method
