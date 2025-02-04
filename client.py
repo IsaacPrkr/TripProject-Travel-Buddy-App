@@ -1,7 +1,7 @@
 import requests
- # Importing Needed Modules
 
-BASE_URL = "http://localhost:5000" # Base URL for the Orchestrator Service
+
+BASE_URL = "http://127.0.0.1:8000" 
 
 
 # defining the query for new trips function
@@ -91,30 +91,21 @@ def check_interest_on_proposed_trips(trip_id): # Parameters for the function
         print(f"Failed to check interest. Error: {response.json()}") # Error handling
 
 # defining creating a user function
-def create_user(name, password): # Parameters for the function needed
-    data = {"name": name, "password": password} # Creating a dictionary of username nad password
-    response = requests.post(f"{BASE_URL}/create_user", json=data) # Sending a POST request
+def create_user(name, password):
+    data = {"name": name, "password": password}
+    response = requests.post(f"{BASE_URL}/create_user", json=data)
 
-    if response.status_code == 200: # Check whether HTTP response is = 200
+    print("Response Code:", response.status_code)  # Debugging line
+    print("Response Text:", response.text)  # Debugging line
+
+    if response.status_code == 200:
         user_info = response.json().get('user', {})
         print("\nUser created successfully!")
-        print(f"User ID: {user_info.get('userID')}") # If response is successful print out the userID, username, and the password hidden in *
+        print(f"User ID: {user_info.get('userID')}")
         print(f"Name: {user_info.get('name')}")
         print("Password:", "*" * len(user_info.get('password')))
-
-
-        choice = input("\nWould you like to login? (yes/no): ").lower() # Prompt the user if they would like to be logged into the application once an account has been created
-
-        if choice == "yes":
-            show_trip_buddy_options()   #   Call show trip buddy options function
-            # If else statement to allow user to choose yes/no
-        elif choice == "no":
-            print("Thank you. Goodbye!")
-
-        else:
-            print("Invalid choice.") # Error handling
     else:
-        print("Failed to create user.") # Error handling
+        print("Failed to create user. Error:", response.json())
 
 # defining function for loggin in the user
 def login_user(name, password): # Parameters for function
@@ -128,7 +119,6 @@ def login_user(name, password): # Parameters for function
         print("\nLogin successful!")
         print(f"User ID: {user_info.get('userID')}")
         print(f"Name: {user_info.get('name')}") # Output details of user login and hide password in *
-        print("Password:", "*" * len(user_info.get('password')))
 
 
         show_trip_buddy_options(user_id) # Display the text interface of the travel buddy application using the show trip buddy options function

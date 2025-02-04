@@ -5,12 +5,14 @@ import json
 import os
 import random
 import string
-
+from fastapi import Depends
 from database import SessionLocal, engine
 from models import Base, UserDB
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
-# import requests
+#  python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload to run the server
 
 # BASE_URL = "https://localhost:5000" # Flask server base URL
 # WORLD_WEATHER_API_URL = "https://api.worldweatheronline.com/premium/v1/weather.ashx"
@@ -21,6 +23,13 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 # User model for request validation
 class UserCreate(BaseModel):
@@ -50,7 +59,7 @@ def ensure_users_file():
 
 # Create User Endpoint
 @app.post('/create_user')
-def create_user(user: UserCreate):
+def create_user(user: UserCreate, db: Session = Depends(getDB)):
     # ensure_users_file()  # Ensure users.json exists
     existing_user = db.query(UserDB).filter(UserDB.name == user.name).first()
     if existing_user:
@@ -69,7 +78,7 @@ def create_user(user: UserCreate):
 
 # Creating REST Method for logging in the user
 @app.post('/login')  
-def login_user(user: UserLogin):
+def login_user(user: UserLogin, db: Session = Depends(getDB)):
    # ensure_users_file()
 
     existing_user = db.query(UserDB).filter(UserDB.name == user.name, UserDB.password == user.password).first()
