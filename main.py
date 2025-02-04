@@ -60,7 +60,6 @@ def create_user(user: User):
     return {"user": {"userID": user_id, "name": user.name, "password": user.password}}
 
 
-
 #   Creating REST Method for logging in the user
 @app.post('/login')  
 def login_user(user: UserLogin):
@@ -245,10 +244,11 @@ if __name__ == '__main__':
 
 
 #List of things to implement
+
 #switch to fastapi
 
-#hash passwords
+#hash passwords (for security)
 
-#save data to mysql
+#save data to database
 
-#retrieve data from mysql
+#retrieve data from database
