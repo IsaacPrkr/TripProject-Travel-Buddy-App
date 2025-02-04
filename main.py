@@ -1,6 +1,6 @@
 # import requests
 # from flask import Flask, request, jsonify# importing needed modules
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 import uvicorn
@@ -20,6 +20,10 @@ app = FastAPI()
 class User(BaseModel):
     name: str
     password: str  # Storing passwords in plain text (not recommended for production)
+
+class UserLogin(BaseModel):
+    name: str
+    password: str
 
 # Function to generate a unique user ID
 def generate_unique_user_id_internal():
@@ -59,24 +63,22 @@ def create_user(user: User):
 
 
 #   Creating REST Method for logging in the user
-@app.route('/login', methods=['POST'])  
-def login_user():
-    data = request.get_json()   
+@app.post('/login')  
+def login_user(user: UserLogin):
+    ensure_users_file()
 
-    if 'name' in data and 'password' in data:
-        name = data['name']     #   Check if name and password exits in the data, extract the name and password
-        password = data['password']
 
-        with open('users.json', 'r') as file:   #   Open users.json file in read
-            users = json.load(file) #   Read file
-
-        for user in users:
-            if user['name'] == name and user['password'] == password: #   Check for matching name and password
-                return jsonify({'message': 'Login successful!', 'user': user}), 200
-
-        return jsonify({'message': 'Incorrect username or password. Please try again.'}), 401
-                                                                                                    #   Handling errors or misinputs
-    return jsonify({'message': 'Invalid request. Please provide both name and password.'}), 400
+    with open('users.json', 'r') as file:   #   Open users.json file in read
+        try:
+            users = json.load(file)
+        except json.JSONDecodeError:
+            users = []
+        
+    for existing_user in users:
+        if existing_user['name'] == user.name and existing_user['password'] == user.password: #   Check for matching name and password
+            return {"message": "Login Successful!", "user": existing_user}
+        
+    raise HTTPException(status_code=401, detail="Incorrect login information, Please try again.")
 
 
 #Creating querying for new trips REST method
