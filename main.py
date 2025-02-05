@@ -68,7 +68,6 @@ def create_user(user: UserCreate, db: Session = Depends(getDB)):
     user_id = generate_unique_user_id_internal()
     new_user = UserDB(userID=user_id, name=user.name, password=user.password)
 
-
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -89,7 +88,7 @@ def login_user(user: UserLogin, db: Session = Depends(getDB)):
     return {"message": "Login Successful!", "user": {"userID": existing_user.userID, "name": existing_user.name}}
         
     
-
+################################################################################################################################
 
 #Creating querying for new trips REST method
 @app.route('/query_for_new_trips', methods=['POST'])    #   Defining route as POST to handle requests to the endpoint
